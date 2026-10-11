@@ -3,7 +3,7 @@
 狀態：已準備與隔離測試，尚未部署，不是正式備份網站。
 
 原站：https://dawuan-banquet-registration.dwhs270.chatgpt.site
-GitHub 帳號：dwhs270-glitch。新儲存庫與 Pages 尚未建立。
+GitHub 帳號：dwhs270-glitch。私人儲存庫已建立：https://github.com/dwhs270-glitch/dawuan-external-activities 。Pages 尚未啟用；目前帳號必須升級或改為公開儲存庫才能啟用。Cloudflare 登入尚未完成，後端尚未建立。
 
 ## 架構與保留範圍
 
@@ -25,17 +25,17 @@ GitHub 帳號：dwhs270-glitch。新儲存庫與 Pages 尚未建立。
 | 姓名、飲食需求、備註及欄位驗證 | 原表單與API保留 | 新增、修改及資料重讀通過；表單操作未驗證 |
 | 相同活動防重複；同人可跨活動 | 原唯一索引與邏輯保留 | 通過 |
 | 送出前重查、原子SQL名額控制 | 原邏輯保留 | 四人並行搶兩席，僅兩筆成功 |
-| 單一人員刪除與確認視窗 | 原介面与SQL保留 | 刪單筆後其他人與活動保留；確認視窗未做瀏覽器測試 |
+| 單一人員刪除與確認視窗 | 原介面與SQL保留 | 刪單筆後其他人與活動保留；確認視窗未做瀏覽器測試 |
 | 刪除活動與其名單 | 原邏輯保留 | 通過 |
 | 報名截止與停止報名旗標 | 原邏輯保留 | 通過 |
 | 名單與詳情收合、次要操作、提示 | 原元件保留 | 瀏覽器未驗證 |
 | 每10秒同步、同步不清表單、成功/錯誤訊息 | 原元件保留 | 新站多人及表單同步尚待部署後驗證 |
 | 同時段衝突提醒 | 原邏輯保留 | 程式保留，尚待畫面測試 |
-| CSV匯出 | 原匯出程式完整保留 | 瀏覽器下载未驗證 |
+| CSV匯出 | 原匯出程式完整保留 | 瀏覽器下載未驗證 |
 | 今日以前活動及名單隔日清除 | Worker Cron每日臺灣00:05；原SQL保留 | 過期、今天、未來三組隔離資料測試通過 |
 | 手機接近全螢幕表單、鍵盤/捲動、44px點擊區域 | 原CSS/visualViewport程式保留 | 360/390/430px、平板、桌面及實機鍵盤未驗證 |
 | 正式資料儲存與多人共享 | 新D1後端尚未建立 | 尚未移轉，不能宣稱通過 |
-| 管理者登入/後台 | 原站無此介面 | 不新增，不恢复已移除功能 |
+| 管理者登入/後台 | 原站無此介面 | 不新增，不恢復已移除功能 |
 | 修改活動資料 | 原站無此操作 | 不虛構此功能 |
 | 使用者資料匯入 | 原站只有首次初始化機制，無使用者匯入按鈕 | 正式備份另提供私有SQL匯入檔，不自動重建舊名單 |
 | PDF/Word下載與附件 | 原站無此功能；public含4個SVG | 全部SVG已複製，未新增不存在的下載功能 |
@@ -45,7 +45,7 @@ GitHub 帳號：dwhs270-glitch。新儲存庫與 Pages 尚未建立。
 `npm ci` 後執行 `npm test`。測試直接呼叫移植API，使用 Node SQLite 記憶體資料庫作為 D1 SQL相容介面，不連正式平台。這不是線上 Cloudflare D1測試，也不是瀏覽器測試。
 
 `VITE_API_BASE_URL=https://您的後端網址 npm run build`。
-未設定HTTPS API時會阻止建置，避免发布無法儲存的網站。初次檢查曾使用測試網址確認建置；dist不納入此候選原始碼套件。
+未設定HTTPS API時會阻止建置，避免發布無法儲存的網站。初次檢查曾使用測試網址確認建置；dist不納入此候選原始碼套件。
 
 ## 後端部署（需先確認與連結帳號）
 
@@ -54,7 +54,7 @@ GitHub 帳號：dwhs270-glitch。新儲存庫與 Pages 尚未建立。
 3. 以 backend/schema.sql 建立資料表，再私下匯入 data-import.sql。不得把匯入檔放到GitHub。
 4. 匯入後逐欄比對資料、計數、ID、外鍵與重複姓名；此資料備份於2026-10-11有6場活動、16位出席、1筆初始化標记。
 5. 部署前重新讀取原站資料，採用最新備份；原站仍可被使用者修改，舊快照不代表切換時的最新狀態。
-6. 部署Worker。ALLOWED_ORIGIN設為https://dwhs270-glitch.github.io；CLEANUP_SECRET使用Cloudflare Secret管理，不寫入程式或GitHub。
+6. 部署Worker。ALLOWED_ORIGIN設為`https://dwhs270-glitch.github.io`；CLEANUP_SECRET 使用 Cloudflare Secret管理，不寫入程式或GitHub。
 7. 設定Cron `5 16 * * *`（UTC），對應臺灣每日00:05，獨立於ChatGPT排程。原站既有排程保留。
 8. 正式上線前測試CORS、API錯誤、資料持久性、名額競態與清理。不要使用真實人員作新增/刪除測試。
 
@@ -62,7 +62,7 @@ GitHub 帳號：dwhs270-glitch。新儲存庫與 Pages 尚未建立。
 
 ## GitHub Pages部署（尚未執行）
 
-建立專屬新儲存庫（建議名稱 dawuan-external-activities）；只上傳本資料夾，不上傳外層原站備份與資料。Settings → Secrets and variables → Actions → Variables 設定 VITE_API_BASE_URL（後端公開網址，不是秘密憑證）。Settings → Pages → Source選GitHub Actions；main修改後由 .github/workflows/pages.yml 測試、建置與部署。
+建立專屬新儲存庫（建議名稱 dawuan-external-activities）；只上傳本資料夾，不上傳外層原站備份與資料。Settings → Secrets and variables → Actions → Variables 設定 VITE_API_BASE_URL（後端公開網址，不是秘密憑證）。Settings → Pages → Source選GitHub Actions；main 修改後由 .github/workflows/pages.yml 測試、建置與部署。尚未設定後端網址時，部署工作會略過，不發布無法儲存的網站。
 
 後端變更需另外部署Cloudflare Worker；前端Pages更新不會自動更新後端。
 
