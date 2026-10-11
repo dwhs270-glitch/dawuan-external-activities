@@ -1,0 +1,20 @@
+{
+  "name": "dawuan-external-activities-api",
+  "main": "worker.ts",
+  "compatibility_date": "2026-10-01",
+  "vars": {
+    "ALLOWED_ORIGIN": "https://dwhs270-glitch.github.io"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "dawuan-external-activities",
+      "database_id": "REPLACE_WITH_NEW_DATABASE_ID"
+    }
+  ],
+  "triggers": {
+    "crons": [
+      "5 16 * * *"
+    ]
+  }
+}
