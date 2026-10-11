@@ -3,7 +3,7 @@
 狀態：已準備與隔離測試，尚未部署，不是正式備份網站。
 
 原站：https://dawuan-banquet-registration.dwhs270.chatgpt.site
-GitHub 帳號：dwhs270-glitch。私人儲存庫已建立：https://github.com/dwhs270-glitch/dawuan-external-activities 。Pages 尚未啟用；目前帳號必須升級或改為公開儲存庫才能啟用。Cloudflare 登入尚未完成，後端尚未建立。
+GitHub 帳號：dwhs270-glitch。公開儲存庫已建立：https://github.com/dwhs270-glitch/dawuan-external-activities 。GitHub Pages 已設定使用 GitHub Actions，自動部署流程已存入儲存庫。Cloudflare 登入尚未完成，後端尚未建立；未設定正式 API 前，部署工作會略過，新網站尚未上線。
 
 ## 架構與保留範圍
 
@@ -60,7 +60,7 @@ GitHub 帳號：dwhs270-glitch。私人儲存庫已建立：https://github.com/d
 
 原站沒有獨立身分驗證；本候選版本延續同樣的公開登記及修改操作。CORS來源限制不等於登入或使用者權限管理；若要增設帳密權限，須另行確認，不能宣稱目前已有。
 
-## GitHub Pages部署（尚未執行）
+## GitHub Pages部署（設定完成，待後端連線後發布）
 
 建立專屬新儲存庫（建議名稱 dawuan-external-activities）；只上傳本資料夾，不上傳外層原站備份與資料。Settings → Secrets and variables → Actions → Variables 設定 VITE_API_BASE_URL（後端公開網址，不是秘密憑證）。Settings → Pages → Source選GitHub Actions；main 修改後由 .github/workflows/pages.yml 測試、建置與部署。尚未設定後端網址時，部署工作會略過，不發布無法儲存的網站。
 
